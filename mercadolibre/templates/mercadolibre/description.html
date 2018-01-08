@@ -1,0 +1,28 @@
+{% extends "konfidence/emails/base.html" %}
+
+{% block content %}
+  <div>
+    <div style="width:100%; height:90px; border-bottom:3px solid #bc162c;">
+      <img style="display:block; margin:0; height:90px;" src="http://{{site}}/static/konfidence/images/kia-konfidence.png"  alt="KIA Konfidence" >
+      <!-- <img style="display:block; margin:0;" src="https://carlisting-stg.interalia.net/static/konfidence/images/kia-konfidence.png" alt="KIA Konfidence" > -->
+    </div>
+    <div style="margin: 15px 0;">
+      <b>Descripci&oacute;n del veh&iacute;culo</b>
+      <p>
+        {{ car_obj.description }}
+      </p>
+    </div>
+    <div>
+      <b>Contacta a un distribuidor KIA</b>
+      <p>{{ dealer }}</p>
+      <p>{{ dealer.address_line}},  {{ dealer.zipcode }}</p>
+      <p>Teléfono: {{ dealer.get_formated_phone }}</p>
+    </div>
+    {% if not debug %}
+    <div style="padding-top:15px;">
+      <p>Mas informaci&oacute;n: <span style="text-decoration: underline;">https://{{site}}{{ car_obj.get_absolute_url }}</span></p>
+    </div>
+    {% endif %}
+  </div>
+
+{% endblock %}

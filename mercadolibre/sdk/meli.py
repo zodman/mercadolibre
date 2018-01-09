@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ConfigParser import SafeConfigParser
-from urllib import urlencode
+from configparser import SafeConfigParser
+from urllib.parse import urlencode
 import json
 import os
 import re

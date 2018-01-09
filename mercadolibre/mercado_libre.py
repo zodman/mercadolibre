@@ -3,14 +3,14 @@ __author__ = 'sergio'
 from django.conf import settings
 # from django.core.urlresolvers import reverse_lazy
 from .utils import get_host, response_by_raw
-from sdk.meli import Meli
+from .sdk.meli import Meli
 
 
 class MeliApp(object):
 
     def __init__(self, access_token=None, refresh_token=None):
-        self.app_id = getattr(settings, 'MERCADO_LIBRE_ID')
-        self.secret_token = getattr(settings,  'MERCADO_LIBRE_SECRET_KEY')
+        self.app_id = getattr(settings, 'MERCADO_LIBRE_ID', "")
+        self.secret_token = getattr(settings,  'MERCADO_LIBRE_SECRET_KEY',"")
         self.access_token = access_token
 
         if access_token and refresh_token:

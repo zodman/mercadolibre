@@ -8,13 +8,50 @@ from .utils import ItemCar, json_process, top_listing_pack
 from datetime import datetime
 from dateutil.parser import parse
 
-MELI = MeliApp()
+MELI_PACKAGES = (
+    ('gold_premium', 'Oro premium'),
+    ('gold', 'Oro'),
+    ('silver', 'Plata')
+)
 
+
+MODELS_OPTIONS = (
+    ('MLM160392', 'Besta'), # ok
+    # ('MLM160393', 'Cadenza'),
+    # ('MLM160394', 'Carens'),
+    # ('MLM160395', 'Carnival'),
+    # ('MLM160412', 'Cerato'),
+    # ('MLM160396', 'Clarus'),
+    # ('MLM160397', 'Credos'),
+    ('MLM160041', 'Forte'), # ok
+    # ('MLM160398', 'Magentis'),
+    # ('MLM160399', 'Mohave'),
+    # ('MLM160400', 'Opirus'),
+    ('MLM160413', 'Optima'), # Bug No attributes
+    # ('MLM160401', 'Picanto'),
+    # ('MLM160402', 'Pregio'),
+    # ('MLM160403', 'Pride'),
+    # ('MLM160404', 'Quoris'),
+    ('MLM160405', 'Rio'), # ok
+    # ('MLM160406', 'Sedona'),
+    # ('MLM160407', 'Sephia'),
+    # ('MLM160408', 'Shuma'),
+    ('MLM160042', 'Sorento'), # Bug No Attributes
+    ('MLM160409', 'Soul'), # ok
+    ('MLM160040', 'Sportage'), # ok
+    # ('MLM160411', 'Stylus'),
+    ('MLM160043', 'Otros Modelos') # NIRO No attributes
+)
+
+
+
+
+MELI = MeliApp()
 
 # Create your models here.
 class MeliAccount(models.Model):
     id = models.DecimalField(verbose_name='id de mercado libre', max_digits=15, decimal_places=0, primary_key=True)
-    user = models.OneToOneField(User, related_name='meli_account', verbose_name='Cuenta de mercado libre')
+    user = models.OneToOneField(User, related_name='meli_account', verbose_name='Cuenta de mercado libre', on_delete=models.CASCADE)
     temporal_code = models.CharField(max_length=255)
     temporal_access_token = models.CharField(max_length=255)
     refresh_token = models.CharField(max_length=255)
@@ -224,7 +261,7 @@ class State(models.Model):
     id = models.CharField(max_length=150, primary_key=True)
     region = models.CharField(max_length=50, blank=True, null=True)
     name = models.CharField(max_length=250)
-    country = models.ForeignKey(Country, related_name='states')
+    country = models.ForeignKey(Country, related_name='states', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Estado'
@@ -243,7 +280,7 @@ class State(models.Model):
 class City(models.Model):
     id = models.CharField(max_length=150, primary_key=True)
     name = models.CharField(max_length=250)
-    state = models.ForeignKey(State, related_name="cities")
+    state = models.ForeignKey(State, related_name="cities",on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Ciudad'
@@ -281,7 +318,7 @@ class MeliCar(models.Model):
     title = models.CharField(max_length=70)
     subtitle = models.CharField(max_length=70, null=True, blank=True)
     description = models.TextField()
-    seller = models.ForeignKey(MeliAccount, related_name='cars')
+    seller = models.ForeignKey(MeliAccount, related_name='cars', on_delete=models.CASCADE)
     category_id = models.CharField(max_length=100)
     official_store_id = models.CharField(max_length=100, null=True, blank=True)
     price = models.IntegerField()
@@ -348,7 +385,7 @@ class MeliCar(models.Model):
 
 class MeliCarPictures(models.Model):
     id = models.CharField(max_length=250, primary_key=True)
-    car = models.ForeignKey(MeliCar, related_name='pictures')
+    car = models.ForeignKey(MeliCar, related_name='pictures', on_delete=models.CASCADE)
     url = models.URLField()
     secure_url = models.URLField(null=True)
     size = models.CharField(max_length=100)

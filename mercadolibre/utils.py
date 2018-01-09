@@ -81,7 +81,7 @@ FORMAT = "%Y-%m-%dT%h:%m:00.000Z"
 class ItemCar(object):
 
     dic_base = {
-        "site_id": getattr(settings, 'DEFAULT_SITE_ID'),
+        "site_id": getattr(settings, 'DEFAULT_SITE_ID',1),
         "title": "",
         "category_id": "",
         "official_store_id": None,

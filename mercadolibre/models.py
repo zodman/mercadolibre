@@ -63,6 +63,10 @@ class MeliAccount(models.Model):
         verbose_name ='cuenta de mercado libre'
         verbose_name_plural = 'cuentas de mercado libre'
 
+    def __str__(self):
+        return self.temporal_access_token
+
+
     def __unicode__(self):
         return self.temporal_access_token
 
@@ -250,6 +254,9 @@ class Country(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
     def get_dict(self):
         return {
             'id': self.id,
@@ -268,6 +275,8 @@ class State(models.Model):
         verbose_name_plural = 'Estados'
 
     def __unicode__(self):
+        return self.name
+    def __str__(self):
         return self.name
 
     def get_dict(self):

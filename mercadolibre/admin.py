@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import City, State
+from .models import MLCity as City, MLState as State
 
 @admin.register(City)
 class CarCustomerAdmin(admin.ModelAdmin):

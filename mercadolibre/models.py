@@ -8,6 +8,8 @@ from .utils import ItemCar, json_process, top_listing_pack
 from datetime import datetime
 from dateutil.parser import parse
 
+_ = lambda x:x
+
 MELI_PACKAGES = (
     ('gold_premium', 'Oro premium'),
     ('gold', 'Oro'),
@@ -240,9 +242,9 @@ class MeliAccount(models.Model):
 #         return self.name
 
 
-class Country(models.Model):
+class MLCountry(models.Model):
     id = models.CharField(max_length=150, primary_key=True)
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, verbose_name=_("Nombre Pais de ML"))
     decimal_separator = models.CharField(max_length=5)
     currency_id = models.CharField(max_length=25)
     time_zone = models.CharField(max_length=150)
@@ -264,11 +266,12 @@ class Country(models.Model):
         }
 
 
-class State(models.Model):
+class MLState(models.Model):
     id = models.CharField(max_length=150, primary_key=True)
     region = models.CharField(max_length=50, blank=True, null=True)
-    name = models.CharField(max_length=250)
-    country = models.ForeignKey(Country, related_name='states', on_delete=models.CASCADE)
+    name = models.CharField(max_length=250, verbose_name="Nombre de estado ML")
+    country = models.ForeignKey(MLCountry, related_name='states',
+                                on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Estado'
@@ -276,6 +279,7 @@ class State(models.Model):
 
     def __unicode__(self):
         return self.name
+
     def __str__(self):
         return self.name
 
@@ -286,10 +290,11 @@ class State(models.Model):
         }
 
 
-class City(models.Model):
+class MLCity(models.Model):
     id = models.CharField(max_length=150, primary_key=True)
-    name = models.CharField(max_length=250)
-    state = models.ForeignKey(State, related_name="cities",on_delete=models.CASCADE)
+    name = models.CharField(max_length=250,
+                                verbose_name=_("Nombre de ciudad ML"))
+    state = models.ForeignKey(MLState, related_name="cities", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Ciudad'
@@ -331,7 +336,8 @@ class MeliCar(models.Model):
     title = models.CharField(max_length=70)
     subtitle = models.CharField(max_length=70, null=True, blank=True)
     description = models.TextField()
-    seller = models.ForeignKey(MeliAccount, related_name='cars', on_delete=models.CASCADE)
+    seller = models.ForeignKey(MeliAccount, related_name='cars',
+                               on_delete=models.CASCADE)
     category_id = models.CharField(max_length=100)
     official_store_id = models.CharField(max_length=100, null=True, blank=True)
     price = models.IntegerField()
@@ -348,6 +354,9 @@ class MeliCar(models.Model):
     condition = models.CharField(max_length=150, default='used')
     video_id = models.CharField(max_length=150, blank=True)
     accepts_mercadopago = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
 
     def __unicode__(self):
         return self.title
@@ -398,12 +407,15 @@ class MeliCar(models.Model):
 
 class MeliCarPictures(models.Model):
     id = models.CharField(max_length=250, primary_key=True)
-    car = models.ForeignKey(MeliCar, related_name='pictures', on_delete=models.CASCADE)
+    #car = models.ForeignKey(MeliCar, related_name='pictures', on_delete=models.CASCADE)
     url = models.URLField()
     secure_url = models.URLField(null=True)
     size = models.CharField(max_length=100)
     max_size = models.CharField(max_length=100)
     quality = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        abstract = True
 
     def __unicode__(self):
         return self.url

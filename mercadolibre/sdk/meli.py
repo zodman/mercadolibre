@@ -42,11 +42,12 @@ class Meli(object):
             'MERCADO_LIBRE_SDK_VERSION',
             parser.get('config', 'sdk_version')
         )
-
+        # MERCADO_LIBRE_AUTH_URL = 'https://auth.mercadolibre.com.mx'
         self.AUTH_URL = getattr(
             settings,
             'MERCADO_LIBRE_AUTH_URL',
-            parser.get('config', 'auth_url')
+            parser.get('config',  'auth_url')
+
         )
 
         self.OAUTH_URL = getattr(
@@ -57,7 +58,7 @@ class Meli(object):
 
         self.headers = {'Accept': 'application/json', 'User-Agent': self.SDK_VERSION, 'Content-type': 'application/json'}
 
-    #AUTH METHODS
+    # AUTH METHODS
     def auth_url(self, redirect_URI):
         params = {'client_id': self.client_id, 'response_type': 'code', 'redirect_uri': redirect_URI}
         url = self.AUTH_URL + '/authorization' + '?' + urlencode(params)

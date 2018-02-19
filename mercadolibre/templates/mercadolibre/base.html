@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body style="padding:0; margin:0; background:#f4f4f4;">
+    <div style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+      {% block preview %}KIA alertas{% endblock %}
+    </div>
+    <center>
+        <div style="font-family:sans-serif; width:650px; margin:0 auto; color:#333; line-height:22px;">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </center>
+</body>
+</html>
+

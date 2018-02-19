@@ -1,0 +1,4 @@
+*.pyc
+.*.sw?
+tags
+__pycache__/

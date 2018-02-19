@@ -77,6 +77,7 @@ class MeliAccount(models.Model):
         using the refresh_token get a new access_token
         :return: String: token
         """
+
         self.temporal_access_token, self.refresh_token = MELI.refresh_token(self.refresh_token)
         self.save()
         return self.temporal_access_token

@@ -10,6 +10,13 @@ import json
 STOP_AFTER_DAYS = getattr(settings, 'STOP_AFTER_DAYS', 90)
 LISTING_PACKS = ['silver', 'gold', 'gold_premium']
 
+
+def extract_meli_account(user):
+    if hasattr(user, 'meli_account'):
+        return user.meli_account
+    return
+
+
 def get_host(request):
     """
     :param request: Object: Django request

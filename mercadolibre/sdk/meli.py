@@ -3,7 +3,7 @@
 
 from configparser import SafeConfigParser
 from urllib.parse import urlencode
-import json
+import simplejson as json
 import os
 import re
 import ssl

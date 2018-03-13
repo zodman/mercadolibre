@@ -5,7 +5,7 @@ from django.conf import settings
 from django.template import loader
 from argparse import Namespace
 from django.utils import timezone
-import json
+import simplejson as json
 
 STOP_AFTER_DAYS = getattr(settings, 'STOP_AFTER_DAYS', 90)
 LISTING_PACKS = ['silver', 'gold', 'gold_premium']
@@ -245,7 +245,7 @@ class ItemCar(object):
         :param city_id: String: ID of the city in Mercado libre
         :return: Dictionary: the dictionary updated
         """
-        from .models import City, Country
+        from .models import MLCity as City, MLCountry as Country
         country = Country.objects.first()
         # state = State.objects.get(id=state_id)
         city = City.objects.get(id=city_id)

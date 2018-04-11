@@ -123,7 +123,7 @@ class ItemCar(object):
     def __init__(self, account, category_id, title, description, price, pictures, listing_type='free'):
         self.dic_base.update({
             'title': title,
-            'description': description,
+            'description': {'plain_text': description},
             'price': price,
             'category_id': category_id,
             'listing_type_id': listing_type
